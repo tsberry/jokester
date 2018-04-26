@@ -1,0 +1,60 @@
+* {
+  font-family: 'Tajawal', sans-serif;
+}
+
+body {
+  background-color: rgb(36,60,88);
+  font-size: 100%
+}
+
+#laughimage {
+  margin-top: 8rem;
+  height: 20rem;
+}
+
+#jokestertitle {
+  color: rgb(244, 155, 0);
+  margin-top: 4rem;
+  padding-left: 0;
+  font-size: 16rem;
+  /* font-family: 'Black Han Sans', sans-serif; */
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 0.5rem;
+}
+
+.navbar-fixed-top {
+  background-color: rgb(25,41,59);
+}
+
+.nav.navbar-nav li a {
+  color: rgb(244, 155, 0);
+  font-size: 1.75rem;
+}
+
+.navbar-nav .open .dropdown-menu {
+  background-color: rgb(216, 216, 216);
+}
+
+.dropdown-menu li, .dropdown-menu a {
+  color: rgb(25,41,59)!important;
+  /* text-align: center; */
+}
+
+#topjokestitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  color: rgb(216, 216, 216);
+  display: block;
+  text-align: center;
+  font-size: 4rem;
+  margin-top: 3rem;
+}
+
+#submitbutton {
+  background-color: rgb(216, 216, 216);
+  color: rgb(25,41,59);
+}
+
+input[placeholder="SEARCH"] {
+  background-color: rgb(216, 216, 216);
+}
