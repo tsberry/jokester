@@ -17,7 +17,6 @@ body {
   margin-top: 4rem;
   padding-left: 0;
   font-size: 16rem;
-  /* font-family: 'Black Han Sans', sans-serif; */
   font-family: 'Luckiest Guy', cursive;
   letter-spacing: 0.5rem;
 }
@@ -37,7 +36,7 @@ body {
 
 .dropdown-menu li, .dropdown-menu a {
   color: rgb(25,41,59)!important;
-  /* text-align: center; */
+  text-align: center;
 }
 
 #topjokestitle {
@@ -62,10 +61,10 @@ input[placeholder="SEARCH"] {
 
 #logintitile {
   color: rgb(244, 155, 0);
-  margin-top: 11rem;
+  margin-top: 8rem;
+  margin-bottom: 3rem;
   padding-left: 0;
   font-size: 8rem;
-  /* font-family: 'Black Han Sans', sans-serif; */
   font-family: 'Luckiest Guy', cursive;
   letter-spacing: 0.5rem;
   display: block;
@@ -79,12 +78,43 @@ input[placeholder="SEARCH"] {
   font-size: 3rem;
   display: block;
   text-align: center;
+  float: right;
   margin-top: 3rem;
 }
 
 .formemailinput, .formpasswordinput {
+  font-family: 'Montserrat', sans-serif;
   color: rgb(25,41,59);
+  font-size: 2.2rem;
   display: block;
   align-content: center;
+  text-align: center;
+  margin-top: 3rem;
+  float: left;
+}
+
+#loginsubmitbutton {
+  font-family: 'Montserrat', sans-serif;
+  color: rgb(25,41,59);
+  display: block;
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 8rem;
+}
+
+#loginsubmitbuttonid {
+  background-color: rgb(244, 155, 0);
+}
+
+input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
+  background-color: rgb(216, 216, 216);
+  text-align: center;
+}
+
+.topjokes {
+  margin-top: 4rem;
+  color: rgb(216, 216, 216);
+  font-size: 2rem;
+  display: block;
   text-align: center;
 }
