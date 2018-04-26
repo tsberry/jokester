@@ -5,12 +5,12 @@ var router = express.Router();
 
 router.get("/", function (req, res) {
     db.Joke.findAll({
-        limit: 10
-        // order: "jokeUpvoteCount DESC"
+        limit: 10,
+        order: [["jokeUpvoteCount", "DESC"]]
     })
     .then(function (data) {
         res.render("index", data);
-    })
+    });
 });
 
 router.get("/api/jokes", function(req, res) {
@@ -30,7 +30,11 @@ router.post("/api/jokes", function (req, res) {
     })
 });
 
-router.post("/users", function (req, res) {
+router.put("/api/jokes/:jid/:uid/:vote", function (req, res) {
+    
+});
+
+router.post("/api/users", function (req, res) {
     db.User.create({
         username: "Thomas",
         password: "hello"
@@ -40,11 +44,11 @@ router.post("/users", function (req, res) {
     })
 });
 
-router.get("/users", function (req, res) {
+router.get("/api/users", function (req, res) {
     db.User.findAll()
     .then(function (data) {
         res.json(data);
     });
-})
+});
 
 module.exports = router;

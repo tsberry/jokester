@@ -11,6 +11,12 @@ module.exports = function (sequelize, DataTypes) {
         jokeDownvoteCount: {
             type: DataTypes.INTEGER,
             defaultValue: 0
+        },
+        jokeNetCount: {
+            type: DataTypes.VIRTUAL,
+            get: function () {
+                return this.getDataValue('jokeUpvoteCount') - this.getDataValue('jokeDownvoteCount');
+            }
         }
     });
 
