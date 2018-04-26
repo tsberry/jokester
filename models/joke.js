@@ -12,16 +12,18 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-        jokeNetCount: {
-            type: DataTypes.VIRTUAL,
-            get: function () {
-                return this.getDataValue('jokeUpvoteCount') - this.getDataValue('jokeDownvoteCount');
-            }
+        category: {
+            type: DataTypes.STRING
         }
     });
 
     Joke.associate = function (models) {
         Joke.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        Joke.hasMany(models.Comment, {
             foreignKey: {
                 allowNull: false
             }
