@@ -11,11 +11,19 @@ module.exports = function (sequelize, DataTypes) {
         jokeDownvoteCount: {
             type: DataTypes.INTEGER,
             defaultValue: 0
+        },
+        category: {
+            type: DataTypes.STRING
         }
     });
 
     Joke.associate = function (models) {
         Joke.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        Joke.hasMany(models.Comment, {
             foreignKey: {
                 allowNull: false
             }
