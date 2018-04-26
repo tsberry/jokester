@@ -13,6 +13,22 @@ router.get("/", function (req, res) {
     });
 });
 
+router.get("/joketopics", function (req, res) {
+    res.render("joketopics")
+});
+
+router.get("/login", function (req, res) {
+    res.render("login")
+});
+
+router.get("/search", function (req, res) {
+    res.render("search")
+});
+
+router.get("/signup", function (req, res) {
+    res.render("signup")
+});
+
 router.get("/api/jokes", function(req, res) {
     db.Joke.findAll({include: [{model: db.User}]})
     .then(function (data) {

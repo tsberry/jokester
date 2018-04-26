@@ -57,4 +57,34 @@ body {
 
 input[placeholder="SEARCH"] {
   background-color: rgb(216, 216, 216);
+  text-align: center;
+}
+
+#logintitile {
+  color: rgb(244, 155, 0);
+  margin-top: 11rem;
+  padding-left: 0;
+  font-size: 8rem;
+  /* font-family: 'Black Han Sans', sans-serif; */
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 0.5rem;
+  display: block;
+  text-align: center;
+}
+
+.formemail, .formpassword {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  color: rgb(216, 216, 216);
+  font-size: 3rem;
+  display: block;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.formemailinput, .formpasswordinput {
+  color: rgb(25,41,59);
+  display: block;
+  align-content: center;
+  text-align: center;
 }
