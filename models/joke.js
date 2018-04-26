@@ -1,24 +1,26 @@
-module.exports = function(sequelize, DataTypes) {
-    var comments_lookup_table = sequelize.define("comments_lookup_table", {
-        isUpvote: {
-            type: DataTypes.BOOLEAN,
-            allowNull: true
+module.exports = function (sequelize, DataTypes) {
+    var Joke = sequelize.define("Joke", {
+        jokeText: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        jokeUpvoteCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        jokeDownvoteCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     });
 
-    comments_lookup_table.associate = function(models) {
-        comments_lookup_table.belongsTo(models.User, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-
-        comments_lookup_table.belongsTo(models.Comment, {
+    Joke.associate = function (models) {
+        Joke.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
             }
         });
     };
 
-    return comments_lookup_table;
+    return Joke;
 };
