@@ -2,14 +2,15 @@
     <div class="row" id="logintitile">LOG IN</div>
 
     <form action="">
-        <div class="row" class="formemail">
-            <label for="email" class="formemail">EMAIL:</label>
-            <input id="email" class="formemailinput" type="text" placeholder="EMAIL">
-        </div>
-        <div class="row" class="formemailinput"></div>
-        <div class="row" class="formpassword"><label for="password" class="formpassword">PASSWORD:</label> </div>   
-        <div class="row" class="formpasswordinput"><input id="password" class="formpasswordinput" type="text" placeholder="PASSWORD"></div>
-        <div class="row"><button>SUBMIT</button></div>
+    <div class="row">
+        <div class="col-md-5"><label for="email" class="formemail">USERNAME:</label></div>
+        <div class="col-md-7"><input id="email" class="formemailinput" type="text" placeholder="USERNAME" required></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5" class="formpassword"><label for="password" class="formpassword">PASSWORD:</label> </div>   
+        <div class="col-md-7" class="formpasswordinput"><input id="password" class="formpasswordinput" type="password" placeholder="PASSWORD" required></div>
+    </div>   
+        <div class="row" id="loginsubmitbutton"><button id="loginsubmitbuttonid">SUBMIT</button></div>
     </form>
 
     </div>
