@@ -1,28 +1,25 @@
 <div class="container">
 
-  <div class="row">
-    <div class="col-md-3"><img id="laughimage" src="/assets/images/laugh.png" alt="burgerimage"></div>
-    <div class="col-md-9" id="jokestertitle">JOKESTER</div>
-  </div>
-  
-  <div class="row"id="topjokestitle"> TODAY'S TOP JOKES</div>
-
-  <div class="row" id="topjokes">
-    <div class="col-md-1"></div>
-
-    <div class="col-md-10">
-      <div>
-      <p class="topjokes">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
-      <input id="like" type="image" name="submit" src="assets/images/like.png" border="0" alt="Submit"/>
-      <input id="dislike" type="image" name="submit" src="assets/images/dislike.png" border="0" alt="Submit"/>
-      </div>
-
-      <p class="topjokes">Eu iuvaret indoctum sea. Mel ne cibo maiestatis consetetur. Dicta mnesarchum has id, pro vidit assentior et. Ex qui dicunt percipit.</p>
-      <p class="topjokes">Pericula scripserit in his, cu everti interesset pri, in duo lorem ocurreret. Pro nonumy putent ne. Eum alia adhuc modus ad, nihil malorum propriae per no. Has elitr iudicabit ad.</p>
+    <div class="row">
+        <div class="col-md-3">
+            <img id="laughimage" src="/assets/images/laugh.png" alt="burgerimage">
+        </div>
+        <div class="col-md-9" id="jokestertitle">JOKESTER</div>
     </div>
 
-    <div class="col-md-1"></div>
-    
-  </div>
+    <div class="row" id="topjokestitle"> TODAY'S TOP JOKES</div>
+
+    <div class="row" id="topjokes">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+            {{#each jokes}} {{> jokes/jokes}} {{/each}}
+        </div>
+
+        <div class="col-md-1"></div>
+
+    </div>
 
 </div>
+
+<script src="assets/js/vote.js"></script>
