@@ -5,10 +5,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         commentUpvoteCount: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         },
         commentDownvoteCount: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     });
 
