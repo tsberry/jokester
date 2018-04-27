@@ -71,7 +71,7 @@ input[placeholder="SEARCH"] {
   text-align: center;
 }
 
-.formemail, .formpassword {
+.formusername, .formpassword {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   color: rgb(216, 216, 216);
@@ -82,7 +82,7 @@ input[placeholder="SEARCH"] {
   margin-top: 3rem;
 }
 
-.formemailinput, .formpasswordinput {
+.formusernameinput, .formpasswordinput {
   font-family: 'Montserrat', sans-serif;
   color: rgb(25,41,59);
   font-size: 2.2rem;
@@ -116,5 +116,13 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   color: rgb(216, 216, 216);
   font-size: 2rem;
   display: block;
-  text-align: center;
+}
+
+.like {
+  height: 3rem;
+}
+
+.dislike {
+  height: 3.1rem;
+  width: 3.3rem;
 }

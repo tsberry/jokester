@@ -32,7 +32,26 @@ app.use(routes);
 
 db.sequelize.sync({force: true})
     .then(function () {
-        app.listen(PORT, function () {
-            console.log("Server listening on: http://localhost:" + PORT);
+        db.User.create({
+            username: "thomas",
+            password: "hello"
+        })
+        .then(function () {
+            db.Joke.create({
+                jokeText: "My joke",
+                category: "Programming Jokes",
+                UserId: 1
+            })
+            .then(function () {
+                db.Joke.create({
+                    jokeText: "Second Joke",
+                    category: "Programming Jokes",
+                    UserId: 1
+                }).then(function () {
+                    app.listen(PORT, function () {
+                        console.log("Server listening on: http://localhost:" + PORT);
+                    });
+                });
+            });
         });
     });
