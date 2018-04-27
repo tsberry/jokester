@@ -70,7 +70,7 @@ router.get("/singlejoke", function (req, res) {
 
 
 router.get("/submitjoke", function (req, res) {
-    res.render("singlejoke")
+    res.render("submitjoke")
 });
 
 router.get("/api/jokes", function (req, res) {

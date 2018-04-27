@@ -157,3 +157,8 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
 .joke {
   margin-bottom: 8rem;
 }
+
+.submitjokeform {
+  font-size: 2rem;
+  margin-top: 10rem;
+}
