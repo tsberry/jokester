@@ -32,8 +32,19 @@
         <div class="jokefooter"><input id="comment" type="image" name="submit" src="assets/images/comment.png" border="0" alt="Submit"/></div>
       </div>    
 
-    <div class="col-md-1"></div>
-    
-  </div>
+    <div class="row" id="topjokestitle"> TODAY'S TOP JOKES</div>
+
+    <div class="row" id="topjokes">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+            {{#each jokes}} {{> jokes/jokes}} {{/each}}
+        </div>
+
+        <div class="col-md-1"></div>
+
+    </div>
 
 </div>
+
+<script src="assets/js/vote.js"></script>

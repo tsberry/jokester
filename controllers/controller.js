@@ -1,15 +1,31 @@
 var express = require("express");
 var db = require("../models");
+var passport = require("../config/passport");
 
 var router = express.Router();
 
 router.get("/", function (req, res) {
+    var loggedIn;
+    if(req.user) loggedIn = true;
+    else loggedIn = false;
     db.Joke.findAll({
         limit: 10,
-        order: [["jokeUpvoteCount", "DESC"]]
+        order: [["jokeUpvoteCount", "DESC"]],
+        include: [{model: db.User}, {model: db.Comment}]
     })
         .then(function (data) {
-            res.render("index", data);
+            var jokes = [];
+            for(var i = 0; i < data.length; i++) {
+                var joke = {
+                    text: data[i].jokeText,
+                    jokeId: data[i].id,
+                    username: data[i].User.username,
+                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                    comments: data[i].Comments.length
+                }
+                jokes.push(joke);
+            }
+            res.render("index", {jokes: jokes});
         });
 });
 
@@ -41,9 +57,10 @@ router.get("/api/jokes", function (req, res) {
 });
 
 router.post("/api/jokes", function (req, res) {
+    if(!req.user) return res.end();
     db.Joke.create({
         jokeText: req.body.text,
-        UserId: req.body.id,
+        UserId: req.user.id,
         category: req.body.category
     })
         .then(function (data) {
@@ -51,14 +68,15 @@ router.post("/api/jokes", function (req, res) {
         })
 });
 
-router.put("/api/jokes/:jid/:uid/:vote", function (req, res) {
+router.put("/api/jokes/:jid/:vote", function (req, res) {
+    if(!req.user) return res.end();
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
     db.jokes_lookup_table.findOne({
         where: {
             JokeId: parseInt(req.params.jid),
-            UserId: parseInt(req.params.uid)
+            UserId: req.user.id
         }
     })
         .then(function (data) {
@@ -78,7 +96,7 @@ router.put("/api/jokes/:jid/:uid/:vote", function (req, res) {
             else {
                 db.jokes_lookup_table.create({
                     JokeId: parseInt(req.params.jid),
-                    UserId: parseInt(req.params.uid),
+                    UserId: req.user.id,
                     isUpvote: isUpvote
                 })
                     .then(function () {
@@ -89,14 +107,14 @@ router.put("/api/jokes/:jid/:uid/:vote", function (req, res) {
 });
 
 router.post("/api/comments", function (req, res) {
+    if(!req.user) return res.end();
     var body = req.body;
     var jid = body.jid;
-    var uid = body.uid;
     var text = body.text;
 
     db.Comment.create({
         commentText: text,
-        UserId: uid,
+        UserId: req.user.id,
         JokeId: jid
     })
         .then(function () {
@@ -111,14 +129,15 @@ router.get("/api/comments", function (req, res) {
         });
 });
 
-router.put("/api/comments/:cid/:uid/:vote", function (req, res) {
+router.put("/api/comments/:cid/:vote", function (req, res) {
+    if(!req.user) return res.end();
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
     db.comments_lookup_table.findOne({
         where: {
             CommentId: parseInt(req.params.cid),
-            UserId: parseInt(req.params.uid)
+            UserId: req.user.id
         }
     })
         .then(function (data) {
@@ -138,7 +157,7 @@ router.put("/api/comments/:cid/:uid/:vote", function (req, res) {
             else {
                 db.comments_lookup_table.create({
                     CommentId: parseInt(req.params.cid),
-                    UserId: parseInt(req.params.uid),
+                    UserId: req.user.id,
                     isUpvote: isUpvote
                 })
                     .then(function () {
@@ -147,6 +166,34 @@ router.put("/api/comments/:cid/:uid/:vote", function (req, res) {
             }
         });
 });
+
+router.post("/api/signup", function (req, res) {
+    console.log(req.body);
+    db.User.create({
+        username: req.body.username,
+        password: req.body.password
+    }).then(function () {
+        res.redirect(307, "/api/login");
+    }).catch(function (err) {
+        console.log(err);
+        res.json(err);
+        // res.status(422).json(err.errors[0].message);
+    });
+});
+
+router.post("/api/login", passport.authenticate("local"), function (req, res) {
+    // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
+    // So we're sending the user back the route to the members page because the redirect will happen on the front end
+    // They won't get this or even be able to access this page if they aren't authed
+    res.json("/joketopics");
+});
+
+// Route for logging user out
+router.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
+});
+
 
 router.post("/api/users", function (req, res) {
     db.User.create({
@@ -164,10 +211,6 @@ router.get("/api/users", function (req, res) {
             res.json(data);
         });
 });
-
-function vote(req, res, isJoke) {
-    
-}
 
 function addJokeCount(jid, isUpvote, res) {
     db.Joke.findOne({ where: { id: jid } })
