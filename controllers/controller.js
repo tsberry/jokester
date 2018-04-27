@@ -29,8 +29,27 @@ router.get("/", function (req, res) {
         });
 });
 
-router.get("/joketopics", function (req, res) {
-    res.render("joketopics")
+router.get("/joketopics/:category", function (req, res) {
+    db.Joke.findAll({
+        limit: 10,
+        order: [["jokeUpvoteCount", "DESC"]],
+        include: [{model: db.User}, {model: db.Comment}],
+        where: {category: req.params.category}
+    })
+        .then(function (data) {
+            var jokes = [];
+            for(var i = 0; i < data.length; i++) {
+                var joke = {
+                    text: data[i].jokeText,
+                    jokeId: data[i].id,
+                    username: data[i].User.username,
+                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                    comments: data[i].Comments.length
+                }
+                jokes.push(joke);
+            }
+            res.render("joketopics", {category: req.params.category, jokes: jokes});
+        });
 });
 
 router.get("/login", function (req, res) {
@@ -190,7 +209,7 @@ router.post("/api/login", passport.authenticate("local"), function (req, res) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
-    res.json("/joketopics");
+    res.json("/");
 });
 
 // Route for logging user out
@@ -199,6 +218,17 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 
+router.get("/loggedin", function (req, res) {
+    var data = {};
+    var loggedIn;
+    if(req.user) {
+        loggedIn = true;
+        data.username = req.user.username;
+    }
+    else loggedIn = false;
+    data.loggedIn = loggedIn;
+    res.json(data);
+});
 
 router.post("/api/users", function (req, res) {
     db.User.create({

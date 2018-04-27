@@ -39,13 +39,13 @@ db.sequelize.sync({force: true})
         .then(function () {
             db.Joke.create({
                 jokeText: "My joke",
-                category: "Programming Jokes",
+                category: "Programming",
                 UserId: 1
             })
             .then(function () {
                 db.Joke.create({
                     jokeText: "Second Joke",
-                    category: "Programming Jokes",
+                    category: "Cross the Road",
                     UserId: 1
                 }).then(function () {
                     app.listen(PORT, function () {
