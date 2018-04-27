@@ -118,11 +118,11 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   display: block;
 }
 
-#like {
+.like {
   height: 3rem;
 }
 
-#dislike {
+.dislike {
   height: 3.1rem;
   width: 3.3rem;
 }

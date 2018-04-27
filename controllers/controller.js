@@ -10,10 +10,22 @@ router.get("/", function (req, res) {
     else loggedIn = false;
     db.Joke.findAll({
         limit: 10,
-        order: [["jokeUpvoteCount", "DESC"]]
+        order: [["jokeUpvoteCount", "DESC"]],
+        include: [{model: db.User}, {model: db.Comment}]
     })
         .then(function (data) {
-            res.render("index", data);
+            var jokes = [];
+            for(var i = 0; i < data.length; i++) {
+                var joke = {
+                    text: data[i].jokeText,
+                    jokeId: data[i].id,
+                    username: data[i].User.username,
+                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                    comments: data[i].Comments.length
+                }
+                jokes.push(joke);
+            }
+            res.render("index", {jokes: jokes});
         });
 });
 
