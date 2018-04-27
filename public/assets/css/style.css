@@ -39,6 +39,10 @@ body {
   text-align: center;
 }
 
+#login, #signup, #logout, #greeting {
+    display: none;
+}
+
 #topjokestitle {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
