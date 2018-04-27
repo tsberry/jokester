@@ -126,3 +126,28 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   height: 3.1rem;
   width: 3.3rem;
 }
+
+#comment {
+  margin-top: .5rem;
+  margin-left: .5rem;
+  height: 2.5rem;
+  width: 9rem;
+}
+
+.zoom {
+  transition: transform .2s;
+  width: 3.3rem;
+  height: 3rem;
+}
+
+.zoom:hover {
+  transform: scale(2);
+}
+
+.jokefooter {
+  float: left;
+}
+
+.joke {
+  margin-bottom: 8rem;
+}
