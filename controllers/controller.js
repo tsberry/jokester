@@ -49,6 +49,11 @@ router.get("/singlejoke", function (req, res) {
     res.render("singlejoke")
 });
 
+
+router.get("/submitjoke", function (req, res) {
+    res.render("singlejoke")
+});
+
 router.get("/api/jokes", function (req, res) {
     db.Joke.findAll({ include: [{ model: db.User }, { model: db.Comment }] })
         .then(function (data) {
