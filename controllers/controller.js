@@ -29,6 +29,10 @@ router.get("/signup", function (req, res) {
     res.render("signup")
 });
 
+router.get("/singlejoke", function (req, res) {
+    res.render("singlejoke")
+});
+
 router.get("/api/jokes", function (req, res) {
     db.Joke.findAll({ include: [{ model: db.User }, { model: db.Comment }] })
         .then(function (data) {

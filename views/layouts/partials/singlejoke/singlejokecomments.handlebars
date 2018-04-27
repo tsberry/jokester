@@ -1,0 +1,16 @@
+<div class="row" id="topjokes">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-10">
+        {{#if account}}{{#each singlejoke}}
+        <p class="topjokes">
+            {{this.singlejoke}}
+        </p>
+        {{else}} 
+        {{!-- add something here --}}
+        {{/if}}
+    </div>
+
+    <div class="col-md-1"></div>
+    
+</div>

@@ -116,5 +116,13 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   color: rgb(216, 216, 216);
   font-size: 2rem;
   display: block;
-  text-align: center;
+}
+
+#like {
+  height: 3rem;
+}
+
+#dislike {
+  height: 3.1rem;
+  width: 3.3rem;
 }
