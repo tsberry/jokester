@@ -39,7 +39,7 @@ body {
   text-align: center;
 }
 
-#login, #signup, #logout, #greeting {
+#login, #signup, #logout, #greeting, #submitjoke {
     display: none;
 }
 
