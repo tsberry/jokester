@@ -150,6 +150,10 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   transform: scale(2);
 }
 
+.vote-button {
+    display: none;
+}
+
 .jokefooter {
   float: left;
 }

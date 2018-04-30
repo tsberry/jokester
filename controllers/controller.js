@@ -1,7 +1,9 @@
 var express = require("express");
 var db = require("../models");
 var passport = require("../config/passport");
-
+var validateCategory = require("./category");
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+var notAuthenticated = require("../config/middleware/notAuthenticated");
 var router = express.Router();
 
 router.get("/", function (req, res) {
@@ -30,28 +32,31 @@ router.get("/", function (req, res) {
 });
 
 router.get("/joketopics/:category", function (req, res) {
-    db.Joke.findAll({
-        order: [["jokeUpvoteCount", "DESC"]],
-        include: [{ model: db.User }, { model: db.Comment }],
-        where: { category: req.params.category }
-    })
-        .then(function (data) {
-            var jokes = [];
-            for (var i = 0; i < data.length; i++) {
-                var joke = {
-                    text: data[i].jokeText,
-                    jokeId: data[i].id,
-                    username: data[i].User.username,
-                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
-                    comments: data[i].Comments.length
+    if(validateCategory(req.params.category)) {
+        db.Joke.findAll({
+            order: [["jokeUpvoteCount", "DESC"]],
+            include: [{ model: db.User }, { model: db.Comment }],
+            where: { category: req.params.category }
+        })
+            .then(function (data) {
+                var jokes = [];
+                for (var i = 0; i < data.length; i++) {
+                    var joke = {
+                        text: data[i].jokeText,
+                        jokeId: data[i].id,
+                        username: data[i].User.username,
+                        score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                        comments: data[i].Comments.length
+                    }
+                    jokes.push(joke);
                 }
-                jokes.push(joke);
-            }
-            res.render("joketopics", { category: req.params.category, jokes: jokes });
-        });
+                res.render("joketopics", { category: req.params.category, jokes: jokes });
+            });
+    }
+    else res.status(404).send("<h1>404</h1> <p>No such category.</p>");
 });
 
-router.get("/login", function (req, res) {
+router.get("/login", notAuthenticated, function (req, res) {
     res.render("login")
 });
 
@@ -59,7 +64,7 @@ router.get("/search", function (req, res) {
     res.render("search")
 });
 
-router.get("/signup", function (req, res) {
+router.get("/signup", notAuthenticated, function (req, res) {
     res.render("signup")
 });
 
@@ -69,6 +74,7 @@ router.get("/jokes/:jid", function (req, res) {
         where: { id: req.params.jid }
     })
         .then(function (data) {
+            if(data === null) return res.status(404).send("<h1>404</h1> <p>No such joke.</p>")
             var joke = {
                 text: data.jokeText,
                 jokeId: data.id,
@@ -94,7 +100,7 @@ router.get("/jokes/:jid", function (req, res) {
 });
 
 
-router.get("/submitjoke", function (req, res) {
+router.get("/submitjoke", isAuthenticated, function (req, res) {
     res.render("submitjoke")
 });
 
