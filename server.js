@@ -32,28 +32,9 @@ var routes = require("./controllers/controller.js");
 
 app.use(routes);
 
-db.sequelize.sync({force: true})
+db.sequelize.sync()
     .then(function () {
-        db.User.create({
-            username: "thomas",
-            password: "hello"
-        })
-        .then(function () {
-            db.Joke.create({
-                jokeText: "My joke",
-                category: "Programming",
-                UserId: 1
-            })
-            .then(function () {
-                db.Joke.create({
-                    jokeText: "Second Joke",
-                    category: "Cross the Road",
-                    UserId: 1
-                }).then(function () {
-                    app.listen(PORT, function () {
-                        console.log("Server listening on: http://localhost:" + PORT);
-                    });
-                });
-            });
+        app.listen(PORT, function () {
+            console.log("Server listening on: http://localhost:" + PORT);
         });
     });
