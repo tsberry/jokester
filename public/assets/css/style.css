@@ -150,10 +150,6 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   transform: scale(2);
 }
 
-.vote-button {
-    display: none;
-}
-
 .jokefooter {
   float: left;
 }
@@ -195,3 +191,43 @@ select {
 /* div textarea {
   background-color: rgb(216, 216, 216);
 } */
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+.notification {
+    visibility: show;
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: black; /* Black background color */
+    color: #fff; /* White text color */
+    font-size: 1.5rem;
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 40px; /* 40px from the bottom */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 40px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 40px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 40px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 40px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}

@@ -11,7 +11,6 @@ $(document).ready(function () {
                 $("#greeting").attr("style", "display:inline");
                 $("#logout").attr("style", "display:inline");
                 $("#submitjoke").attr("style", "display:inline");
-                $(".vote-button").attr("style", "display:inline");
             }
         });
 });

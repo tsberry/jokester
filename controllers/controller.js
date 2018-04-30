@@ -124,7 +124,7 @@ router.post("/api/jokes", function (req, res) {
 });
 
 router.put("/api/jokes/:jid/:vote", function (req, res) {
-    if (!req.user) return res.end();
+    if (!req.user) return res.json({added: false, message: "Log In or Sign Up to Vote!"});
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -285,7 +285,7 @@ function addJokeCount(jid, isUpvote, res) {
                 newCount = data.dataValues.jokeUpvoteCount + 1;
                 db.Joke.update({ jokeUpvoteCount: newCount }, { where: { id: jid } })
                     .then(function () {
-                        res.end();
+                        res.json({added: true, message: "Vote Added!"});
                     });
             }
             else {
