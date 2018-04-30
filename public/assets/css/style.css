@@ -132,7 +132,7 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   width: 3.3rem;
 }
 
-#comment {
+.comment {
   margin-top: .5rem;
   margin-left: .5rem;
   height: 2.5rem;
