@@ -162,14 +162,15 @@ router.put("/api/jokes/:jid/:vote", function (req, res) {
 });
 
 router.post("/api/comments", function (req, res) {
-    // if(!req.user) return res.end();
+    if(!req.user) return res.end();
     var body = req.body;
+    console.log(body);
     var jid = body.jid;
     var text = body.text;
 
     db.Comment.create({
         commentText: text,
-        UserId: req.body.uid,
+        UserId: req.user.id,
         JokeId: jid
     })
         .then(function () {
