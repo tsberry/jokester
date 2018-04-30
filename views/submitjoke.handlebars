@@ -1,25 +1,27 @@
 <div class="container submitjokeform">
-    
+
     <div class="row">
-        <form action="">
-        <select id="question8" name="question8" required>
-            <option value="" disabled selected value> Select an Option</option>
-            <option value="1">Animal Jokes</option>
-            <option value="2">Cross the Road Jokes</option> 
-            <option value="3">Food Jokes</option>
-            <option value="4">Kids Jokes</option>
-            <option value="5">Knock Knock Jokes</option>
-            <option value="5">Programming Jokes</option>
-            <option value="5">School Jokes</option>
-            <option value="5">Walks Into a Bar Jokes</option>
-            <option value="5">Work Jokes</option>
-            <option value="5">Yo Mama Jokes</option>
-        </select>   
+        <form class="joke" action="">
+            <select id="category" name="category" required>
+                <option value="" disabled selected> Select an Option</option>
+                <option value="0">Animal Jokes</option>
+                <option value="1">Cross the Road Jokes</option>
+                <option value="2">Food Jokes</option>
+                <option value="3">Kids Jokes</option>
+                <option value="4">Knock Knock Jokes</option>
+                <option value="5">Programming Jokes</option>
+                <option value="6">School Jokes</option>
+                <option value="7">Walks Into a Bar Jokes</option>
+                <option value="8">Work Jokes</option>
+                <option value="9">Yo Mama Jokes</option>
+            </select>
 
-        <input type="text">
+            <input id="joketext" type="text">
 
-        <input type="submit">
+            <input type="submit">
 
         </form>
     </div>
-</div>   
+</div>
+
+<script src="/assets/js/jokesubmit.js"></script>
