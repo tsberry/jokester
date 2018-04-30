@@ -162,3 +162,7 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   font-size: 2rem;
   margin-top: 10rem;
 }
+
+.submitjokeform .row {
+  color: green
+}
