@@ -1,7 +1,6 @@
 $(document).ready(function () {
     $.get("/loggedin")
         .then(function (data) {
-            console.log(data);
             if (!data.loggedIn) {
                 $("#login").attr("style", "display:inline");
                 $("#signup").attr("style", "display:inline");

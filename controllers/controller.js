@@ -32,7 +32,7 @@ router.get("/", function (req, res) {
 });
 
 router.get("/joketopics/:category", function (req, res) {
-    if(validateCategory(req.params.category)) {
+    if (validateCategory(req.params.category)) {
         db.Joke.findAll({
             order: [["jokeUpvoteCount", "DESC"]],
             include: [{ model: db.User }, { model: db.Comment }],
@@ -74,17 +74,17 @@ router.get("/jokes/:jid", function (req, res) {
         where: { id: req.params.jid }
     })
         .then(function (data) {
-            if(data === null) return res.status(404).send("<h1>404</h1> <p>No such joke.</p>")
+            if (data === null) return res.status(404).send("<h1>404</h1> <p>No such joke.</p>")
             var joke = {
                 text: data.jokeText,
                 jokeId: data.id,
                 username: data.User.username,
                 score: data.jokeUpvoteCount - data.jokeDownvoteCount,
             }
-            data.getComments({include: [{model: db.User}]})
+            data.getComments({ include: [{ model: db.User }] })
                 .then(function (comments) {
                     var commentArray = [];
-                    for(var i = 0; i < comments.length; i++) {
+                    for (var i = 0; i < comments.length; i++) {
                         var comment = {
                             text: comments[i].commentText,
                             commentId: comments[i].id,
@@ -124,7 +124,7 @@ router.post("/api/jokes", function (req, res) {
 });
 
 router.put("/api/jokes/:jid/:vote", function (req, res) {
-    if (!req.user) return res.json({added: false, message: "Log In or Sign Up to Vote!"});
+    if (!req.user) return res.json({ added: false, message: "Log In or Sign Up to Vote!" });
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -162,7 +162,7 @@ router.put("/api/jokes/:jid/:vote", function (req, res) {
 });
 
 router.post("/api/comments", function (req, res) {
-    if(!req.user) return res.end();
+    if (!req.user) return res.end();
     var body = req.body;
     console.log(body);
     var jid = body.jid;
@@ -186,7 +186,7 @@ router.get("/api/comments", function (req, res) {
 });
 
 router.put("/api/comments/:cid/:vote", function (req, res) {
-    if (!req.user) return res.json({added: false, message: "Log In or Sign Up to Vote!"});
+    if (!req.user) return res.json({ added: false, message: "Log In or Sign Up to Vote!" });
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -237,9 +237,7 @@ router.post("/api/signup", function (req, res) {
 });
 
 router.post("/api/login", passport.authenticate("local"), function (req, res) {
-    // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
-    // So we're sending the user back the route to the members page because the redirect will happen on the front end
-    // They won't get this or even be able to access this page if they aren't authed
+    console.log(req);
     res.json("/");
 });
 
@@ -286,14 +284,14 @@ function addJokeCount(jid, isUpvote, res) {
                 newCount = data.dataValues.jokeUpvoteCount + 1;
                 db.Joke.update({ jokeUpvoteCount: newCount }, { where: { id: jid } })
                     .then(function () {
-                        res.json({added: true, message: "Vote Added!"});
+                        res.json({ added: true, message: "Vote Added!" });
                     });
             }
             else {
                 newCount = data.dataValues.jokeDownvoteCount + 1;
                 db.Joke.update({ jokeDownvoteCount: newCount }, { where: { id: jid } })
                     .then(function () {
-                        res.json({added: true, message: "Vote Added!"});
+                        res.json({ added: true, message: "Vote Added!" });
                     });
             }
         });
@@ -313,7 +311,7 @@ function swapJokeVote(jid, isUpvote, res) {
             }
             db.Joke.update({ jokeUpvoteCount: newUpvote, jokeDownvoteCount: newDownvote }, { where: { id: jid } })
                 .then(function () {
-                    res.json({added: true, message: "Vote Added!"});
+                    res.json({ added: true, message: "Vote Added!" });
                 });
         });
 }
@@ -326,14 +324,14 @@ function addCommentCount(cid, isUpvote, res) {
                 newCount = data.dataValues.commentUpvoteCount + 1;
                 db.Comment.update({ commentUpvoteCount: newCount }, { where: { id: cid } })
                     .then(function () {
-                        res.json({added: true, message: "Vote Added!"});
+                        res.json({ added: true, message: "Vote Added!" });
                     });
             }
             else {
                 newCount = data.dataValues.commentDownvoteCount + 1;
                 db.Comment.update({ commentDownvoteCount: newCount }, { where: { id: cid } })
                     .then(function () {
-                        res.json({added: true, message: "Vote Added!"});
+                        res.json({ added: true, message: "Vote Added!" });
                     });
             }
         });
@@ -353,7 +351,7 @@ function swapCommentVote(cid, isUpvote, res) {
             }
             db.Comment.update({ commentUpvoteCount: newUpvote, commentDownvoteCount: newDownvote }, { where: { id: cid } })
                 .then(function () {
-                    res.json({added: true, message: "Vote Added!"});
+                    res.json({ added: true, message: "Vote Added!" });
                 });
         });
 }
