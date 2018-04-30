@@ -35,7 +35,11 @@ $(document).ready(function() {
     }
   
     function handleLoginErr() {
-      alert("A user with that name already exists!");
+        var notification = $(`<div class="notification">A User with that name already exists!</div>`)
+        $("body").append(notification);
+        setTimeout(function() {
+            $(".notification").remove();
+        }, 3000);
     }
   });
   

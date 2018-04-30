@@ -4,8 +4,15 @@ $(document).ready(function() {
         var vote = $(this).data("vote");
         var type = $(this).data("type");
         $.ajax(`/api/${type}/${id}/${vote}`, {type: "PUT"})
-        .then(function () {
-            location.reload();
+        .then(function (data) {
+            if(data.added) location.reload();
+            else {
+                var notification = $(`<div class="notification">${data.message}</div>`)
+                $("body").append(notification);
+                setTimeout(function() {
+                    $(".notification").remove();
+                }, 3000);
+            }
         })
     });
 });
