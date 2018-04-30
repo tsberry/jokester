@@ -154,11 +154,40 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   float: left;
 }
 
+.jokefootertext {
+  color: rgb(244, 155, 0); 
+  font-size: 1.7rem;
+  margin-top: .4rem;
+  margin-left: 1.5rem;
+  letter-spacing: .07rem;
+}
+
+#viewcomments {
+  color: rgb(244, 155, 0); 
+}
+
 .joke {
   margin-bottom: 8rem;
 }
 
 .submitjokeform {
   font-size: 2rem;
-  margin-top: 10rem;
+  margin-top: 13rem;
+  display: block;
+  text-align: center;
 }
+
+select {
+  /* background-color: rgb(216, 216, 216); */
+}
+
+#submitjokebutton {
+  font-family: 'Montserrat', sans-serif;
+  color: rgb(25,41,59);
+  font-size: 2rem;
+  background-color: rgb(244, 155, 0);
+}
+
+/* div textarea {
+  background-color: rgb(216, 216, 216);
+} */
