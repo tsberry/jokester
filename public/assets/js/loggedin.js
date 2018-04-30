@@ -7,7 +7,7 @@ $(document).ready(function () {
                 $("#signup").attr("style", "display:inline");
             }
             else {
-                $("#greeting-text").text(`Hello, ${data.username}!`);
+                $("#greeting-text").text(`What's Crackin' ${data.username}?`);
                 $("#greeting").attr("style", "display:inline");
                 $("#logout").attr("style", "display:inline");
                 $("#submitjoke").attr("style", "display:inline");
