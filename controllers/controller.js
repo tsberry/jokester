@@ -81,7 +81,9 @@ router.get("/jokes/:jid", function (req, res) {
                     for(var i = 0; i < comments.length; i++) {
                         var comment = {
                             text: comments[i].commentText,
-                            username: comments[i].User.username
+                            commentId: comments[i].id,
+                            username: comments[i].User.username,
+                            score: comments[i].commentUpvoteCount - comments[i].commentDownvoteCount
                         }
                         commentArray.push(comment);
                     }
@@ -111,7 +113,7 @@ router.post("/api/jokes", function (req, res) {
         category: req.body.category
     })
         .then(function (data) {
-            res.json("/");
+            res.json(`/jokes/${data.id}`);
         })
 });
 
@@ -154,14 +156,14 @@ router.put("/api/jokes/:jid/:vote", function (req, res) {
 });
 
 router.post("/api/comments", function (req, res) {
-    if(!req.user) return res.end();
+    // if(!req.user) return res.end();
     var body = req.body;
     var jid = body.jid;
     var text = body.text;
 
     db.Comment.create({
         commentText: text,
-        UserId: req.user.id,
+        UserId: req.body.uid,
         JokeId: jid
     })
         .then(function () {
