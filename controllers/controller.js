@@ -1,7 +1,9 @@
 var express = require("express");
 var db = require("../models");
 var passport = require("../config/passport");
-
+var validateCategory = require("./category");
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+var notAuthenticated = require("../config/middleware/notAuthenticated");
 var router = express.Router();
 
 router.get("/", function (req, res) {
@@ -30,28 +32,31 @@ router.get("/", function (req, res) {
 });
 
 router.get("/joketopics/:category", function (req, res) {
-    db.Joke.findAll({
-        order: [["jokeUpvoteCount", "DESC"]],
-        include: [{ model: db.User }, { model: db.Comment }],
-        where: { category: req.params.category }
-    })
-        .then(function (data) {
-            var jokes = [];
-            for (var i = 0; i < data.length; i++) {
-                var joke = {
-                    text: data[i].jokeText,
-                    jokeId: data[i].id,
-                    username: data[i].User.username,
-                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
-                    comments: data[i].Comments.length
+    if(validateCategory(req.params.category)) {
+        db.Joke.findAll({
+            order: [["jokeUpvoteCount", "DESC"]],
+            include: [{ model: db.User }, { model: db.Comment }],
+            where: { category: req.params.category }
+        })
+            .then(function (data) {
+                var jokes = [];
+                for (var i = 0; i < data.length; i++) {
+                    var joke = {
+                        text: data[i].jokeText,
+                        jokeId: data[i].id,
+                        username: data[i].User.username,
+                        score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                        comments: data[i].Comments.length
+                    }
+                    jokes.push(joke);
                 }
-                jokes.push(joke);
-            }
-            res.render("joketopics", { category: req.params.category, jokes: jokes });
-        });
+                res.render("joketopics", { category: req.params.category, jokes: jokes });
+            });
+    }
+    else res.status(404).send("<h1>404</h1> <p>No such category.</p>");
 });
 
-router.get("/login", function (req, res) {
+router.get("/login", notAuthenticated, function (req, res) {
     res.render("login")
 });
 
@@ -59,7 +64,7 @@ router.get("/search", function (req, res) {
     res.render("search")
 });
 
-router.get("/signup", function (req, res) {
+router.get("/signup", notAuthenticated, function (req, res) {
     res.render("signup")
 });
 
@@ -69,6 +74,7 @@ router.get("/jokes/:jid", function (req, res) {
         where: { id: req.params.jid }
     })
         .then(function (data) {
+            if(data === null) return res.status(404).send("<h1>404</h1> <p>No such joke.</p>")
             var joke = {
                 text: data.jokeText,
                 jokeId: data.id,
@@ -94,7 +100,7 @@ router.get("/jokes/:jid", function (req, res) {
 });
 
 
-router.get("/submitjoke", function (req, res) {
+router.get("/submitjoke", isAuthenticated, function (req, res) {
     res.render("submitjoke")
 });
 
@@ -118,7 +124,7 @@ router.post("/api/jokes", function (req, res) {
 });
 
 router.put("/api/jokes/:jid/:vote", function (req, res) {
-    if (!req.user) return res.end();
+    if (!req.user) return res.json({added: false, message: "Log In or Sign Up to Vote!"});
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -156,14 +162,15 @@ router.put("/api/jokes/:jid/:vote", function (req, res) {
 });
 
 router.post("/api/comments", function (req, res) {
-    // if(!req.user) return res.end();
+    if(!req.user) return res.end();
     var body = req.body;
+    console.log(body);
     var jid = body.jid;
     var text = body.text;
 
     db.Comment.create({
         commentText: text,
-        UserId: req.body.uid,
+        UserId: req.user.id,
         JokeId: jid
     })
         .then(function () {
@@ -279,7 +286,7 @@ function addJokeCount(jid, isUpvote, res) {
                 newCount = data.dataValues.jokeUpvoteCount + 1;
                 db.Joke.update({ jokeUpvoteCount: newCount }, { where: { id: jid } })
                     .then(function () {
-                        res.end();
+                        res.json({added: true, message: "Vote Added!"});
                     });
             }
             else {

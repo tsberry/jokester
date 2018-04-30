@@ -1,12 +1,13 @@
 $(document).ready(function () {
     // Getting references to our form and inputs
-    var commentForm = $("form.commentForm");
+    var commentForm = $("form#comment-form");
 
     commentForm.on("submit", function (event) {
         event.preventDefault();
-        var commentText = $("input#commenttext");
+        var commentText = $("input#comment-text");
         var userData = {
             commenttext: commentText.val().trim(),
+            jid: commentForm.data("id")
         };
 
         console.log(userData);
@@ -14,7 +15,7 @@ $(document).ready(function () {
             return;
         }
 
-        submitComment(userData.joketext, commentForm.data("id"));
+        submitComment(userData.commenttext, userData.jid);
         commentText.val("");
     });
 
