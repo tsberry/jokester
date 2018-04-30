@@ -6,16 +6,16 @@ var router = express.Router();
 
 router.get("/", function (req, res) {
     var loggedIn;
-    if(req.user) loggedIn = true;
+    if (req.user) loggedIn = true;
     else loggedIn = false;
     db.Joke.findAll({
         limit: 10,
         order: [["jokeUpvoteCount", "DESC"]],
-        include: [{model: db.User}, {model: db.Comment}]
+        include: [{ model: db.User }, { model: db.Comment }]
     })
         .then(function (data) {
             var jokes = [];
-            for(var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var joke = {
                     text: data[i].jokeText,
                     jokeId: data[i].id,
@@ -25,20 +25,19 @@ router.get("/", function (req, res) {
                 }
                 jokes.push(joke);
             }
-            res.render("index", {jokes: jokes});
+            res.render("index", { jokes: jokes });
         });
 });
 
 router.get("/joketopics/:category", function (req, res) {
     db.Joke.findAll({
-        limit: 10,
         order: [["jokeUpvoteCount", "DESC"]],
-        include: [{model: db.User}, {model: db.Comment}],
-        where: {category: req.params.category}
+        include: [{ model: db.User }, { model: db.Comment }],
+        where: { category: req.params.category }
     })
         .then(function (data) {
             var jokes = [];
-            for(var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var joke = {
                     text: data[i].jokeText,
                     jokeId: data[i].id,
@@ -48,7 +47,7 @@ router.get("/joketopics/:category", function (req, res) {
                 }
                 jokes.push(joke);
             }
-            res.render("joketopics", {category: req.params.category, jokes: jokes});
+            res.render("joketopics", { category: req.params.category, jokes: jokes });
         });
 });
 
@@ -64,8 +63,32 @@ router.get("/signup", function (req, res) {
     res.render("signup")
 });
 
-router.get("/singlejoke", function (req, res) {
-    res.render("singlejoke")
+router.get("/jokes/:jid", function (req, res) {
+    db.Joke.findOne({
+        include: [{ model: db.User }],
+        where: { id: req.params.jid }
+    })
+        .then(function (data) {
+            var joke = {
+                text: data.jokeText,
+                jokeId: data.id,
+                username: data.User.username,
+                score: data.jokeUpvoteCount - data.jokeDownvoteCount,
+            }
+            data.getComments({include: [{model: db.User}]})
+                .then(function (comments) {
+                    var commentArray = [];
+                    for(var i = 0; i < comments.length; i++) {
+                        var comment = {
+                            text: comments[i].commentText,
+                            username: comments[i].User.username
+                        }
+                        commentArray.push(comment);
+                    }
+                    joke.comments = commentArray;
+                    res.render("singlejoke", joke);
+                });
+        });
 });
 
 
@@ -81,19 +104,19 @@ router.get("/api/jokes", function (req, res) {
 });
 
 router.post("/api/jokes", function (req, res) {
-    if(!req.user) return res.end();
+    if (!req.user) return res.end();
     db.Joke.create({
         jokeText: req.body.text,
         UserId: req.user.id,
         category: req.body.category
     })
         .then(function (data) {
-            res.end();
+            res.json("/");
         })
 });
 
 router.put("/api/jokes/:jid/:vote", function (req, res) {
-    if(!req.user) return res.end();
+    if (!req.user) return res.end();
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -154,7 +177,7 @@ router.get("/api/comments", function (req, res) {
 });
 
 router.put("/api/comments/:cid/:vote", function (req, res) {
-    if(!req.user) return res.end();
+    if (!req.user) return res.end();
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -201,7 +224,6 @@ router.post("/api/signup", function (req, res) {
     }).catch(function (err) {
         console.log(err);
         res.json(err);
-        // res.status(422).json(err.errors[0].message);
     });
 });
 
@@ -221,7 +243,7 @@ router.get("/logout", function (req, res) {
 router.get("/loggedin", function (req, res) {
     var data = {};
     var loggedIn;
-    if(req.user) {
+    if (req.user) {
         loggedIn = true;
         data.username = req.user.username;
     }
