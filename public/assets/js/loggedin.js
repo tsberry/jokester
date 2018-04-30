@@ -10,6 +10,7 @@ $(document).ready(function () {
                 $("#greeting-text").text(`Hello, ${data.username}!`);
                 $("#greeting").attr("style", "display:inline");
                 $("#logout").attr("style", "display:inline");
+                $("#submitjoke").attr("style", "display:inline");
             }
         });
 });
