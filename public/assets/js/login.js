@@ -27,11 +27,16 @@ $(document).ready(function() {
       $.post("/api/login", {
         username: username,
         password: password
-      }).then(function(data) {
-        window.location.replace(data);
+      }).done(function(data) {
         // If there's an error, log the error
-      }).catch(function(err) {
-        console.log(err);
+        console.log(data);
+        window.location.replace(data);
+      }).fail(function(error) {
+        var notification = $(`<div class="notification">Bad Login Details</div>`)
+        $("body").append(notification);
+        setTimeout(function() {
+            $(".notification").remove();
+        }, 3000);
       });
     }
   

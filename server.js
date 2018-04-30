@@ -4,6 +4,7 @@ var session = require("express-session");
 var path = require("path");
 // Requiring passport as we've configured it
 var passport = require("./config/passport");
+var flash = require("connect-flash");
 
 var app = express();
 var PORT = process.env.PORT || 7000;
@@ -18,6 +19,7 @@ app.use(express.static('public'));
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
