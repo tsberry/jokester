@@ -186,7 +186,7 @@ router.get("/api/comments", function (req, res) {
 });
 
 router.put("/api/comments/:cid/:vote", function (req, res) {
-    if (!req.user) return res.end();
+    if (!req.user) return res.json({added: false, message: "Log In or Sign Up to Vote!"});
     var isUpvote;
     if (req.params.vote === "up") isUpvote = true;
     else if (req.params.vote === "down") isUpvote = false;
@@ -293,7 +293,7 @@ function addJokeCount(jid, isUpvote, res) {
                 newCount = data.dataValues.jokeDownvoteCount + 1;
                 db.Joke.update({ jokeDownvoteCount: newCount }, { where: { id: jid } })
                     .then(function () {
-                        res.end();
+                        res.json({added: true, message: "Vote Added!"});
                     });
             }
         });
@@ -313,7 +313,7 @@ function swapJokeVote(jid, isUpvote, res) {
             }
             db.Joke.update({ jokeUpvoteCount: newUpvote, jokeDownvoteCount: newDownvote }, { where: { id: jid } })
                 .then(function () {
-                    res.end();
+                    res.json({added: true, message: "Vote Added!"});
                 });
         });
 }
@@ -326,14 +326,14 @@ function addCommentCount(cid, isUpvote, res) {
                 newCount = data.dataValues.commentUpvoteCount + 1;
                 db.Comment.update({ commentUpvoteCount: newCount }, { where: { id: cid } })
                     .then(function () {
-                        res.end();
+                        res.json({added: true, message: "Vote Added!"});
                     });
             }
             else {
                 newCount = data.dataValues.commentDownvoteCount + 1;
                 db.Comment.update({ commentDownvoteCount: newCount }, { where: { id: cid } })
                     .then(function () {
-                        res.end();
+                        res.json({added: true, message: "Vote Added!"});
                     });
             }
         });
@@ -353,7 +353,7 @@ function swapCommentVote(cid, isUpvote, res) {
             }
             db.Comment.update({ commentUpvoteCount: newUpvote, commentDownvoteCount: newDownvote }, { where: { id: cid } })
                 .then(function () {
-                    res.end();
+                    res.json({added: true, message: "Vote Added!"});
                 });
         });
 }
