@@ -1,49 +1,21 @@
-<div class="container" style="color:white">
+<div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <img id="laughimage" src="/assets/images/laugh.png" alt="burgerimage">
+        <div class="joke" id="singlejokecontainer">
+            <p class="singlejoke">{{text}}<br></p>
+            <div class="singlejokefooter singlejokefootertext">SCORE: {{score}}</div>
+            <div class="singlejokefooter singlejokefootertext">POSTED BY: {{username}}</div>
         </div>
-        <div class="col-md-9" id="jokestertitle">JOKESTER</div>
     </div>
+
     <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-lg-8">
-            <h1>{{username}}'s Joke:</h1>
-        </div>
-        <div class="col-sm-2"></div>
+        <p id="addcomment">ADD A COMMENT!</p>
+        <form id="comment-form" data-id="{{jokeId}}" action="">
+            <textarea id="singlejoketextarea" id="" cols="60" rows="2" required></textarea><br> <br> 
+            <button id="singlejokesubmit">SUBMIT</button>
+        </form>
+        <p>{{#each comments}} {{> singlejoke/singlejokecomments}} {{/each}}</p>
     </div>
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-lg-6">
-            <p>{{text}}</p>
-        </div>
-        <div class="col-lg-2">
-            <p>Posted By: {{username}}</p>
-            <p>Score: {{score}}</p>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-2" style="font-size:20px">
-            Add a comment!
-        </div>
-        <div class="col-sm-6">
-            <form id="comment-form" data-id="{{jokeId}}" action="">
-                Comment Text:
-                <br>
-                <input id="comment-text" type="text" name="comment" style="width:100%; height:100px">
-            </form>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            {{#each comments}} {{> singlejoke/singlejokecomments}} {{/each}}
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
+
 </div>
 
 <script src="/assets/js/commentsubmit.js"></script>
