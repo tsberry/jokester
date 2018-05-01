@@ -1,15 +1,17 @@
 <div class="container">
     <div class="row">
         <div class="joke" id="singlejokecontainer">
-            <p class="singlejoke">{{text}}<br></p>
-             <div class="zoom jokefooter">
-        <input class="vote-button like" data-type="jokes" data-id="{{jokeId}}" data-vote="up" type="image" name="submit" src="/assets/images/like.png"
-            border="0" alt="Submit" />
-    </div>
-    <div class="zoom jokefooter">
-        <input class="vote-button dislike" data-type="jokes" data-id="{{jokeId}}" data-vote="down" type="image" name="submit"
-            src="/assets/images/dislike.png" border="0" alt="Submit" />
-    </div>
+            <p class="singlejoke">{{text}}
+                <br>
+            </p>
+            <div class="zoom jokefooter">
+                <input class="vote-button like" data-type="jokes" data-id="{{jokeId}}" data-vote="up" type="image" name="submit" src="/assets/images/like.png"
+                    border="0" alt="Submit" />
+            </div>
+            <div class="zoom jokefooter">
+                <input class="vote-button dislike" data-type="jokes" data-id="{{jokeId}}" data-vote="down" type="image" name="submit" src="/assets/images/dislike.png"
+                    border="0" alt="Submit" />
+            </div>
             <div class="singlejokefooter singlejokefootertext">SCORE: {{score}}</div>
             <div class="singlejokefooter singlejokefootertext">POSTED BY: {{username}}</div>
         </div>
@@ -18,17 +20,18 @@
     <div id="comment-form-row" class="row">
         <p id="addcomment">ADD A COMMENT!</p>
         <form id="comment-form" data-id="{{jokeId}}" action="">
-            <textarea id="singlejoketextarea" id="" cols="60" rows="2" maxlength="255" required></textarea><br> <br> 
+            <textarea id="singlejoketextarea" id="" cols="60" rows="2" maxlength="255" required></textarea>
+            <br>
+            <br>
             <button id="singlejokesubmit">SUBMIT</button>
         </form>
     </div>
     <div class="row">
         <br>
         <br>
-        <br>
+        <br> 
         {{#each comments}} {{> singlejoke/singlejokecomments}} {{/each}}
     </div>
-
 </div>
 
 <script src="/assets/js/commentsubmit.js"></script>
