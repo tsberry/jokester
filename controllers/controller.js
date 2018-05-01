@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
     else loggedIn = false;
     db.Joke.findAll({
         limit: 10,
-        order: [["jokeUpvoteCount", "DESC"]],
+        order: [["jokeNetCount", "DESC"]],
         include: [{ model: db.User }, { model: db.Comment }]
     })
         .then(function (data) {
@@ -22,7 +22,7 @@ router.get("/", function (req, res) {
                     text: data[i].jokeText,
                     jokeId: data[i].id,
                     username: data[i].User.username,
-                    score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                    score: data[i].jokeNetCount,
                     comments: data[i].Comments.length
                 }
                 jokes.push(joke);
@@ -34,7 +34,7 @@ router.get("/", function (req, res) {
 router.get("/joketopics/:category", function (req, res) {
     if (validateCategory(req.params.category)) {
         db.Joke.findAll({
-            order: [["jokeUpvoteCount", "DESC"]],
+            order: [["jokeNetCount", "DESC"]],
             include: [{ model: db.User }, { model: db.Comment }],
             where: { category: req.params.category }
         })
@@ -45,7 +45,7 @@ router.get("/joketopics/:category", function (req, res) {
                         text: data[i].jokeText,
                         jokeId: data[i].id,
                         username: data[i].User.username,
-                        score: data[i].jokeUpvoteCount - data[i].jokeDownvoteCount,
+                        score: data[i].jokeNetCount,
                         comments: data[i].Comments.length
                     }
                     jokes.push(joke);
@@ -58,10 +58,6 @@ router.get("/joketopics/:category", function (req, res) {
 
 router.get("/login", notAuthenticated, function (req, res) {
     res.render("login")
-});
-
-router.get("/search", function (req, res) {
-    res.render("search")
 });
 
 router.get("/signup", notAuthenticated, function (req, res) {
@@ -79,7 +75,7 @@ router.get("/jokes/:jid", function (req, res) {
                 text: data.jokeText,
                 jokeId: data.id,
                 username: data.User.username,
-                score: data.jokeUpvoteCount - data.jokeDownvoteCount,
+                score: data.jokeNetCount,
             }
             data.getComments({ include: [{ model: db.User }] })
                 .then(function (comments) {
@@ -89,7 +85,7 @@ router.get("/jokes/:jid", function (req, res) {
                             text: comments[i].commentText,
                             commentId: comments[i].id,
                             username: comments[i].User.username,
-                            score: comments[i].commentUpvoteCount - comments[i].commentDownvoteCount
+                            score: comments[i].commentNetCount
                         }
                         commentArray.push(comment);
                     }
@@ -102,13 +98,6 @@ router.get("/jokes/:jid", function (req, res) {
 
 router.get("/submitjoke", isAuthenticated, function (req, res) {
     res.render("submitjoke")
-});
-
-router.get("/api/jokes", function (req, res) {
-    db.Joke.findAll({ include: [{ model: db.User }, { model: db.Comment }] })
-        .then(function (data) {
-            res.json(data);
-        });
 });
 
 router.post("/api/jokes", function (req, res) {
@@ -176,13 +165,6 @@ router.post("/api/comments", function (req, res) {
         .then(function () {
             res.end();
         })
-});
-
-router.get("/api/comments", function (req, res) {
-    db.Comment.findAll()
-        .then(function (data) {
-            res.json(data);
-        });
 });
 
 router.put("/api/comments/:cid/:vote", function (req, res) {
@@ -279,16 +261,19 @@ function addJokeCount(jid, isUpvote, res) {
     db.Joke.findOne({ where: { id: jid } })
         .then(function (data) {
             var newCount;
+            var newNet;
             if (isUpvote) {
                 newCount = data.dataValues.jokeUpvoteCount + 1;
-                db.Joke.update({ jokeUpvoteCount: newCount }, { where: { id: jid } })
+                newNet = data.dataValues.jokeNetCount + 1;
+                db.Joke.update({ jokeUpvoteCount: newCount , jokeNetCount: newNet}, { where: { id: jid } })
                     .then(function () {
                         res.json({ added: true, message: "Vote Added!" });
                     });
             }
             else {
                 newCount = data.dataValues.jokeDownvoteCount + 1;
-                db.Joke.update({ jokeDownvoteCount: newCount }, { where: { id: jid } })
+                newNet = data.dataValues.jokeNetCount - 1;
+                db.Joke.update({ jokeDownvoteCount: newCount , jokeNetCount: newNet}, { where: { id: jid } })
                     .then(function () {
                         res.json({ added: true, message: "Vote Added!" });
                     });
@@ -300,15 +285,18 @@ function swapJokeVote(jid, isUpvote, res) {
     db.Joke.findOne({ where: { id: jid } })
         .then(function (data) {
             var newCount;
+            var newNet;
             if (isUpvote) {
                 newUpvote = data.dataValues.jokeUpvoteCount + 1;
                 newDownvote = data.dataValues.jokeDownvoteCount - 1;
+                newNet = data.dataValues.jokeNetCount + 2;
             }
             else {
                 newUpvote = data.dataValues.jokeUpvoteCount - 1;
                 newDownvote = data.dataValues.jokeDownvoteCount + 1;
+                newNet = data.dataValues.jokeNetCount - 2;
             }
-            db.Joke.update({ jokeUpvoteCount: newUpvote, jokeDownvoteCount: newDownvote }, { where: { id: jid } })
+            db.Joke.update({ jokeUpvoteCount: newUpvote, jokeDownvoteCount: newDownvote , jokeNetCount: newNet}, { where: { id: jid } })
                 .then(function () {
                     res.json({ added: true, message: "Vote Added!" });
                 });
@@ -319,16 +307,19 @@ function addCommentCount(cid, isUpvote, res) {
     db.Comment.findOne({ where: { id: cid } })
         .then(function (data) {
             var newCount;
+            var newNet;
             if (isUpvote) {
                 newCount = data.dataValues.commentUpvoteCount + 1;
-                db.Comment.update({ commentUpvoteCount: newCount }, { where: { id: cid } })
+                newNet = data.dataValues.commentNetCount + 1;
+                db.Comment.update({ commentUpvoteCount: newCount , commentNetCount: newNet}, { where: { id: cid } })
                     .then(function () {
                         res.json({ added: true, message: "Vote Added!" });
                     });
             }
             else {
                 newCount = data.dataValues.commentDownvoteCount + 1;
-                db.Comment.update({ commentDownvoteCount: newCount }, { where: { id: cid } })
+                newNet = data.dataValues.commentNetCount - 1;
+                db.Comment.update({ commentDownvoteCount: newCount , commentNetCount: newNet}, { where: { id: cid } })
                     .then(function () {
                         res.json({ added: true, message: "Vote Added!" });
                     });
@@ -340,15 +331,18 @@ function swapCommentVote(cid, isUpvote, res) {
     db.Comment.findOne({ where: { id: cid } })
         .then(function (data) {
             var newCount;
+            var newNet;
             if (isUpvote) {
                 newUpvote = data.dataValues.commentUpvoteCount + 1;
                 newDownvote = data.dataValues.commentDownvoteCount - 1;
+                newNet = data.dataValues.commentNetCount + 2;
             }
             else {
                 newUpvote = data.dataValues.commentUpvoteCount - 1;
                 newDownvote = data.dataValues.commentDownvoteCount + 1;
+                newNet = data.dataValues.commentNetCount + 2;
             }
-            db.Comment.update({ commentUpvoteCount: newUpvote, commentDownvoteCount: newDownvote }, { where: { id: cid } })
+            db.Comment.update({ commentUpvoteCount: newUpvote, commentDownvoteCount: newDownvote , commentNetCount: newNet}, { where: { id: cid } })
                 .then(function () {
                     res.json({ added: true, message: "Vote Added!" });
                 });

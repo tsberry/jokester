@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
         commentDownvoteCount: {
             type: DataTypes.INTEGER,
             defaultValue: 0
+        },
+        commentNetCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     });
 

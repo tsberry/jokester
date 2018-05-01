@@ -10,6 +10,7 @@ $(document).ready(function () {
                 $("#greeting").attr("style", "display:inline");
                 $("#logout").attr("style", "display:inline");
                 $("#submitjoke").attr("style", "display:inline");
+                $("#comment-form-row").attr("style", "display:inline")
             }
         });
 });
