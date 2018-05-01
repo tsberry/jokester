@@ -340,7 +340,7 @@ function swapCommentVote(cid, isUpvote, res) {
             else {
                 newUpvote = data.dataValues.commentUpvoteCount - 1;
                 newDownvote = data.dataValues.commentDownvoteCount + 1;
-                newNet = data.dataValues.commentNetCount + 2;
+                newNet = data.dataValues.commentNetCount - 2;
             }
             db.Comment.update({ commentUpvoteCount: newUpvote, commentDownvoteCount: newDownvote , commentNetCount: newNet}, { where: { id: cid } })
                 .then(function () {
