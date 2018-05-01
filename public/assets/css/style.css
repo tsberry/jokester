@@ -223,6 +223,20 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   letter-spacing: .07rem;
 }
 
+.commentfooter {
+  float: left;
+}
+
+.commentfootertext {
+  color: rgb(244, 155, 0); 
+  font-size: 1.7rem;
+  margin-top: .4rem;
+  margin-right: 1.5rem;
+  letter-spacing: .07rem;
+}
+
+
+
 #viewcomments {
   color: rgb(244, 155, 0); 
 }
@@ -279,6 +293,13 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
 #horizontalrule {
   width: 100%;
   border-color: rgb(128, 128, 128);
+}
+
+#singlejokecommentsdiv {
+  color: rgb(205, 205, 205);
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 2rem;
 }
 
 /* The snackbar - position it at the bottom and in the middle of the screen */
