@@ -219,7 +219,7 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   color: rgb(244, 155, 0); 
   font-size: 1.7rem;
   margin-top: .4rem;
-  margin-right: 1.5rem;
+  margin-left: 1.3rem;
   letter-spacing: .07rem;
 }
 
@@ -231,7 +231,7 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   color: rgb(244, 155, 0); 
   font-size: 1.7rem;
   margin-top: .4rem;
-  margin-right: 1.5rem;
+  margin-left: 1.3rem;
   letter-spacing: .07rem;
 }
 
@@ -281,8 +281,10 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
 
 #addcomment {
   color: rgb(244, 155, 0);
+  font-family: 'Lalezar', cursive;
+  letter-spacing: .2  rem;
   font-size: 2rem;
-  font-size: 1.7rem;
+  font-size: 3rem;
 }
 
 #singlejoketextarea {
