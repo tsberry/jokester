@@ -4,6 +4,7 @@ var session = require("express-session");
 var path = require("path");
 // Requiring passport as we've configured it
 var passport = require("./config/passport");
+var flash = require("connect-flash");
 
 var app = express();
 var PORT = process.env.PORT || 7000;
@@ -18,6 +19,7 @@ app.use(express.static('public'));
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
@@ -30,28 +32,9 @@ var routes = require("./controllers/controller.js");
 
 app.use(routes);
 
-db.sequelize.sync({force: true})
+db.sequelize.sync()
     .then(function () {
-        db.User.create({
-            username: "thomas",
-            password: "hello"
-        })
-        .then(function () {
-            db.Joke.create({
-                jokeText: "My joke",
-                category: "Programming",
-                UserId: 1
-            })
-            .then(function () {
-                db.Joke.create({
-                    jokeText: "Second Joke",
-                    category: "Cross the Road",
-                    UserId: 1
-                }).then(function () {
-                    app.listen(PORT, function () {
-                        console.log("Server listening on: http://localhost:" + PORT);
-                    });
-                });
-            });
+        app.listen(PORT, function () {
+            console.log("Server listening on: http://localhost:" + PORT);
         });
     });
