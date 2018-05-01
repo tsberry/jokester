@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     commentForm.on("submit", function (event) {
         event.preventDefault();
-        var commentText = $("input#comment-text");
+        var commentText = $("textarea#singlejoketextarea");
         var userData = {
             commenttext: commentText.val().trim(),
             jid: commentForm.data("id")

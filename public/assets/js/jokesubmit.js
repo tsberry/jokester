@@ -1,10 +1,10 @@
 $(document).ready(function () {
     // Getting references to our form and inputs
-    var jokeForm = $("form.joke");
+    var jokeForm = $("form.jokeform");
 
     jokeForm.on("submit", function (event) {
         event.preventDefault();
-        var jokeText = $("input#joketext");
+        var jokeText = $("textarea#jokeinputtext");
         var category = $("select#category option:selected");
         var userData = {
             joketext: jokeText.val().trim(),
@@ -21,7 +21,6 @@ $(document).ready(function () {
         category.val("");
     });
 
-    // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
     function submitJoke(joketext, category) {
         $.post("/api/jokes", {
             text: joketext,
