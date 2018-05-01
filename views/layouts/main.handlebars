@@ -10,13 +10,21 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="/assets/js/loggedin.js"></script>
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Montserrat:800|Tajawal" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lalezar|Luckiest+Guy|Tajawal" rel="stylesheet">
     <title>Jokester</title>
 </head>
 <body>
 <nav class="navbar navbar-fixed-top">
   <div class="container-fluid">
+    <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class="active"><a href="/">HOME</a></li>
           <li class="dropdown">
@@ -36,12 +44,12 @@
             </ul>
           </li>
           <li id="submitjoke" class="active"><a href="/submitjoke">SUBMIT A JOKE</a></li>
-          <form class="navbar-form navbar-right" action="/action_page.php">
+          {{!-- <form class="navbar-form navbar-right" action="/action_page.php">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="SEARCH">
             </div>
             <button type="submit" class="btn btn-default" id="submitbutton">SUBMIT</button>
-          </form>    
+          </form>     --}}
     </ul>
         <ul class="nav navbar-nav navbar-right">
           <li id="greeting"><a id="greeting-text"></a></li>
@@ -49,6 +57,7 @@
           <li id="login"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> LOG IN</a></li>
           <li id="logout"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> LOG OUT</a></li>
         </ul>
+  </div>
   </div>
 </nav>
 
