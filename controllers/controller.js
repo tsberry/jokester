@@ -250,13 +250,6 @@ router.post("/api/users", function (req, res) {
         })
 });
 
-router.get("/api/users", function (req, res) {
-    db.User.findAll()
-        .then(function (data) {
-            res.json(data);
-        });
-});
-
 function addJokeCount(jid, isUpvote, res) {
     db.Joke.findOne({ where: { id: jid } })
         .then(function (data) {
