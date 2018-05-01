@@ -237,7 +237,6 @@ router.post("/api/signup", function (req, res) {
 });
 
 router.post("/api/login", passport.authenticate("local"), function (req, res) {
-    console.log(req);
     res.json("/");
 });
 

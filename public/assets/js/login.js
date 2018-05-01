@@ -32,7 +32,7 @@ $(document).ready(function() {
         console.log(data);
         window.location.replace(data);
       }).fail(function(error) {
-        var notification = $(`<div class="notification">Bad Login Details</div>`)
+        var notification = $(`<div class="notification">Invalid Login Information</div>`)
         $("body").append(notification);
         setTimeout(function() {
             $(".notification").remove();
