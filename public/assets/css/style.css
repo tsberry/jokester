@@ -292,12 +292,12 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   background-color: rgb(241, 241, 241)
 }
 
-#horizontalrule {
+.horizontalrule {
   width: 100%;
   border-color: rgb(128, 128, 128);
 }
 
-#singlejokecommentsdiv {
+.singlejokecommentsdiv {
   color: rgb(205, 205, 205);
   font-size: 2rem;
   display: block;
