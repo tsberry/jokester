@@ -28,14 +28,22 @@ $(document).ready(function() {
         username: username,
         password: password
       }).then(function(data) {
-        if(data !== "/") handleLoginErr();
+        if(data !== "/") {
+            if(data.name === "SequelizeUniqueConstraintError") handleLoginErr("unique");
+            else if(data.name === "SequelizeValidationError") handleLoginErr("validation");
+            else handleLoginErr("other");
+        }
         else window.location.replace(data);
         // If there's an error, handle it by throwing up a boostrap alert
       });
     }
   
-    function handleLoginErr() {
-        var notification = $(`<div class="notification">A User with that name already exists!</div>`)
+    function handleLoginErr(type) {
+        var message;
+        if(type === "unique") message = "A User with that name already exists!";
+        else if(type === "validation") message = "Invalid Username! Letters and Numbers Only.";
+        else message = "Unknown signup error. Please try again.";
+        var notification = $(`<div class="notification">${message}</div>`)
         $("body").append(notification);
         setTimeout(function() {
             $(".notification").remove();
