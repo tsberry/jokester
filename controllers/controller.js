@@ -153,7 +153,6 @@ router.put("/api/jokes/:jid/:vote", function (req, res) {
 router.post("/api/comments", function (req, res) {
     if (!req.user) return res.end();
     var body = req.body;
-    console.log(body);
     var jid = body.jid;
     var text = body.text;
 
@@ -206,7 +205,6 @@ router.put("/api/comments/:cid/:vote", function (req, res) {
 });
 
 router.post("/api/signup", function (req, res) {
-    console.log(req.body);
     db.User.create({
         username: req.body.username,
         password: req.body.password
@@ -238,16 +236,6 @@ router.get("/loggedin", function (req, res) {
     else loggedIn = false;
     data.loggedIn = loggedIn;
     res.json(data);
-});
-
-router.post("/api/users", function (req, res) {
-    db.User.create({
-        username: "Thomas",
-        password: "hello"
-    })
-        .then(function (data) {
-            res.end();
-        })
 });
 
 function addJokeCount(jid, isUpvote, res) {
