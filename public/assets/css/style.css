@@ -38,12 +38,12 @@ li a:hover {
   background: rgb(241, 241, 241)!important;
 }
 
-#laughimage {
+.laughimage {
   margin-top: 8rem;
   height: 20rem;
 }
 
-#jokestertitle {
+.jokestertitle {
   color: rgb(244, 155, 0);
   margin-top: 4rem;
   padding-left: 0;
@@ -235,8 +235,6 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
   letter-spacing: .07rem;
 }
 
-
-
 #viewcomments {
   color: rgb(244, 155, 0); 
 }
@@ -346,8 +344,111 @@ input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
 
 
 /* MEDIA QUERIES////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-@media only screen and (max-width:990) {
-  div[src="/assets/images/laugh.png"] {
-    height: 100rem;
+@media only screen and (max-width: 1020px)  {
+  .laughimage {
+    height: 16rem;
+  }
+  .jokestertitle {
+  font-size: 15rem;
+  }
+}
+
+@media only screen and (max-width: 992px)  {
+  .laughimage {
+    height: 14rem;
+    margin-top: 7rem;
+  }
+  .jokestertitle {
+  font-size: 13rem;
+  }
+}
+
+@media only screen and (max-width: 750px)  {
+  .laughimage {
+    height: 12rem;
+    margin-top: 6rem;
+  }
+  .jokestertitle {
+  font-size: 11rem;
+  }
+}
+
+@media only screen and (max-width: 610px)  {
+  .jokefootertext, .commentfootertext, .singlejokefootertext {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 560px)  {
+  .jokefootertext, .commentfootertext, .singlejokefootertext {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 600px)  {
+  .laughimage {
+    height: 10rem;
+  }
+  .jokestertitle {
+  font-size: 9rem;
+  }
+  .formusername, .formpassword {
+    font-size: 2rem;
+  }
+
+  .formusernameinput, .formpasswordinput {
+    font-size: 1.5rem;
+  }
+
+  input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
+    height: 3rem;
+    width: 20rem;
+  }
+}
+
+@media only screen and (max-width: 500px)  {
+  .laughimage {
+    height: 8rem;
+    margin-top: 6rem;
+  }
+  .jokestertitle {
+  font-size: 7rem;
+  margin-top: 4.5rem;
+  }
+}
+
+@media only screen and (max-width: 400px)  {
+  .laughimage {
+    height: 5.5rem;
+    margin-top: 5.5rem;
+  }
+  .jokestertitle {
+  font-size: 5rem;
+  }
+}
+
+@media only screen and (max-width: 380px)  {
+  .formusername, .formpassword {
+    font-size: 1.5rem;
+  }
+
+  .formusernameinput, .formpasswordinput {
+    font-size: 1rem;
+  }
+
+  input[placeholder="USERNAME"], input[placeholder="PASSWORD"] {
+    height: 2.5rem;
+    width: 15rem;
+  }
+}
+
+@media only screen and (max-width: 300px)  {
+  .laughimage {
+    height: 4rem;
+    margin-top: 6rem;
+  }
+  .jokestertitle {
+  font-size: 3.8rem;
+  margin-top: 5.2rem;
   }
 }
